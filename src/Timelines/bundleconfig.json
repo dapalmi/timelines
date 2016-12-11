@@ -1,0 +1,30 @@
+[
+  {
+    "outputFileName": "wwwroot/css/site.min.css",
+    "inputFiles": [
+      "wwwroot/css/site.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/site.min.js",
+    "inputFiles": [
+      "wwwroot/js/site.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/js/app-timelines.min.js",
+    "inputFiles": [
+      "wwwroot/js/app-timelines.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/timelinesController.min.js",
+    "inputFiles": [
+      "wwwroot/js/timelinesController.js"
+    ]
+  }
+]

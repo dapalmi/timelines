@@ -1,0 +1,46 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.void {
+    height: 20px;
+}
+
+.show-animation {
+   -webkit-transition: all linear 0.2s;
+   -moz-transition: all linear 0.2s;
+   -o-transition: all linear 0.2s;
+   transition: all linear 0.2s;
+   max-height: 20px;
+   /*opacity: 1;*/
+   overflow-y: hidden;
+ }
+
+.show-animation.ng-hide {
+  max-height: 0;
+  /*opacity: 0;*/
+}
+
+.fa-fw{
+  line-height: 20px;
+  width: 20px;
+}
+
+.img-circle{
+  width: 120px;
+  height: 120px;
+}
+
+.progress{
+  border: 0;
+  padding: 0;
+}
+

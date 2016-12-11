@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "Persons";
+}
+@section Scripts{
+    <environment names="Development">
+        <script src="~/lib/angular/angular.js"></script>
+        <script src="~/lib/showdown/dist/showdown.js"></script>
+        <script src="~/js/app-timelines.js" asp-append-version="true"></script>
+        <script src="~/js/personsController.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular.min.js"
+                asp-fallback-src="~/lib/angular/angular.min.js"
+                asp-fallback-test="window.angular">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.5.1/showdown.min.js"
+                asp-fallback-src="~/lib/showdown/dist/showdown.min.js">
+        </script>
+        <script src="~/js/app-timelines.min.js" asp-append-version="true"></script>
+        <script src="~/js/personsController.min.js" asp-append-version="true"></script>
+    </environment>
+}
+
+<div id="personsContainer" class="container" ng-app="app-timelines" ng-controller="personsController">
+    
+    <table class="table table-responsive table-striped">
+        <tr ng-repeat="person in persons">
+            <td>{{person.name}}</td>
+            <td>{{person.startDate}}</td>
+        </tr>
+    </table>
+    
+    <form novalidate name="newPersonForm" ng-submit="addPerson">
+        <div class="form-group">
+            <label for="name">Person Name</label>
+            <input class="form-control" type="text" id="name" name="name" ng-model="newPerson.name"/>
+        </div>
+        <div class="form-group">
+            <label>Person Name</label>
+            <input type="submit" value="Add" class="btn btn-submit btn-sm"/>
+        </div>
+    </form>
+
+</div>

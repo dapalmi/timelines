@@ -1,0 +1,140 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@section Scripts{
+<environment names="Development">
+    <script src="~/lib/angular/angular.js"></script>
+    <script src="~/lib/angular-animate/angular-animate.js"></script>
+    <script src="~/lib/angular-sanitize/angular-sanitize.js"></script>
+    <script src="~/lib/showdown/dist/showdown.js"></script>
+    <script src="~/js/app-timelines.js" asp-append-version="true"></script>
+    <script src="~/js/timelinesController.js" asp-append-version="true"></script>
+</environment>
+<environment names="Staging,Production">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular.min.js"
+            asp-fallback-src="~/lib/angular/angular.min.js"
+            asp-fallback-test="window.angular">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-animate.min.js"
+            asp-fallback-src="~/lib/angular-animate/angular-animate.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-sanitize.min.js"
+            asp-fallback-src="~/lib/angular-sanitize/angular-sanitize.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.5.1/showdown.min.js"
+            asp-fallback-src="~/lib/showdown/dist/showdown.min.js">
+    </script>
+    <script src="~/js/app-timelines.min.js" asp-append-version="true"></script>
+    <script src="~/js/timelinesController.min.js" asp-append-version="true"></script>
+</environment>
+}
+
+<div id="timelineContainer" class="container" ng-app="app-timelines" ng-controller="timelinesController">
+    <h1 class="text-center">Bible Timeline</h1>
+    <div class="panel-group">
+        <div class="panel panel-default">
+            <div class="panel-heading panel-title" role="button" data-toggle="collapse" href="#collapse1">
+                Configuration
+            </div>
+            <div id="collapse1" class="panel-collapse collapse">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <div class="form-group">
+                            <label class="control-label" for="yearsPerInterval">Years per interval</label>
+                            <select id="yearsPerInterval" class="form-control" ng-options="intervalYear for intervalYear in intervalYears" ng-model="config.yearsPerInterval" ng-change="changeConfig()"></select>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="form-group">
+                            <label class="control-label" for="startYear">Start year</label>
+                            <select id="startYear" class="form-control" ng-options="year as year.name for year in years track by year.value" ng-model="selectedYear" ng-change="changeConfig()"></select>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div ng-repeat="size in sizes">
+        <div id="timelinePanel" class="center-block" ng-class="getTimelineClass(size.name)" ng-style="getTimelineWidth(size.name)">
+            <div class="text-center">
+                <i class="fa fa-fast-backward fa-2x" role="button" ng-click="fastBackward(size.name)" title="Go to the beginning of the timeline"></i>
+                <i class="fa fa-fw"></i>
+                <i class="fa fa-step-backward fa-2x" role="button" ng-click="backward(size.name)" title="Go one step backward"></i>
+                <i class="fa fa-fw"></i>
+                <i class="fa fa-step-forward fa-2x" role="button" ng-click="forward(size.name)" title="Go one step forward"></i>
+                <i class="fa fa-fw"></i>
+                <i class="fa fa-fast-forward fa-2x" role="button" ng-click="fastForward(size.name)" title="Go to the end of the timeline"></i>
+            </div>
+            <div id="timelineHeader">
+                <div class="pull-left" ng-style="getIntervalWidth()" ng-repeat="interval in size.intervals track by $index">
+                    <div class="text-center">
+                        <h2 ng-bind="interval"></h2>
+                        <i class="fa fa-angle-down fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div id="timelineRows">
+                <div ng-repeat="timeline in size.timelines">
+                    <div id="timelineDetails" class="show-animation" ng-show="timeline.isSelected">
+                        <div class="pull-left void" ng-style="getTimelineDetailsVoidWidth(timeline, size.name)"></div>
+                        <div ng-repeat="event in getCurrentEvents(timeline.events, size.name) track by $index">
+                            <div class="pull-left void" ng-style="getEventVoidWidth(event, timeline, size.name)"></div>
+                            <div class="pull-left text-center" role="button" ng-attr-title="{{getEventTitle(event)}}" data-toggle="modal" data-target="#eventModal-{{size.name}}-{{timeline.id}}-{{$index}}">
+                                <i class="fa fa-circle fa-lg fa-fw"></i>
+                            </div>
+                            <div class="modal fade" id="eventModal-{{size.name}}-{{timeline.id}}-{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <div class="modal-title text-center">
+                                                <h2>{{timeline.name}}</h2>
+                                                <h4>[{{timeline.meaning}}]</h4>
+                                                <h4>{{getTimelineRangeString(timeline)}}</h4>
+                                                <img ng-src="{{getImageSrc(timeline.image)}}" alt="{{timeline.name}}" class="img-circle">
+                                            </div>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="text-center">
+                                                <h3>{{event.name}}</h3>
+                                                <h4>{{getEventYearString(event.year)}}</h4>
+                                            </div>
+                                            <hr />
+                                            <div ng-bind-html="getHtmlEventText(event.text)"></div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="pull-left void" ng-style="getTimelineVoidWidth(timeline, size.name)"></div>
+                    <div class="pull-left progress" role="button" ng-attr-title="{{getTimelineTitle(timeline)}}" ng-style="getCompleteWidth(timeline, size.name)"
+                         ng-mouseover="setHighlights(timeline.id)"
+                         ng-click="selectTimeline(timeline)">
+                        <div class="progress-bar progress-bar-striped"
+                             ng-class="{'progress-bar-danger' : isParent(timeline.id), 'progress-bar-success' : isChild(timeline.id), 'progress-bar-info' : isSpouse(timeline.id), 'progress-bar-warning' : isSibling(timeline.id)}"
+                             role="progressbar" ng-style="getUnknownStartWidth(timeline, size.name)">
+                            <span ng-bind="getUnknownStartTimelineName(timeline, size.name)"></span>
+                        </div>
+                        <div class="progress-bar"
+                             ng-class="{'progress-bar-danger' : isParent(timeline.id), 'progress-bar-success' : isChild(timeline.id), 'progress-bar-info' : isSpouse(timeline.id), 'progress-bar-warning' : isSibling(timeline.id)}"
+                             role="progressbar" ng-style="getMainWidth(timeline, size.name)">
+                            <span ng-bind="getMainTimelineName(timeline, size.name)"></span>
+                        </div>
+                        <div class="progress-bar progress-bar-striped"
+                             ng-class="{'progress-bar-danger' : isParent(timeline.id), 'progress-bar-success' : isChild(timeline.id), 'progress-bar-info' : isSpouse(timeline.id), 'progress-bar-warning' : isSibling(timeline.id)}"
+                             role="progressbar" ng-style="getUnknownEndWidth(timeline, size.name)">
+                            <span ng-bind="getUnknownEndTimelineName(timeline, size.name)"></span>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
