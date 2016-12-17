@@ -14,9 +14,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
+using Timelines.Automapper;
 using Timelines.Domain;
 using Timelines.Domain.Event;
 using Timelines.Domain.Person;
+using Timelines.Domain.Relationship;
 using Timelines.Persistence;
 using Timelines.Service;
 using Timelines.ViewModels;
@@ -71,9 +73,11 @@ namespace Timelines
 
             services.AddScoped<EventRepository>();
             services.AddScoped<PersonRepository>();
+            services.AddScoped<RelationshipRepository>();
 
-            services.AddScoped<EventService>();
             services.AddScoped<PersonService>();
+            services.AddScoped<EventService>();
+            services.AddScoped<RelationshipService>();
             services.AddScoped<TimelineService>();
 
             // Add framework services.
@@ -100,14 +104,14 @@ namespace Timelines
             {
                 config.CreateMap<Event, EventViewModel>().ReverseMap();
                 config.CreateMap<Person, PersonViewModel>().ReverseMap();
+                config.CreateMap<Relationship, RelationshipViewModel>().ReverseMap();
                 config.CreateMap<Person, TimelineViewModel>()
-                    .ForMember(t => t.Events, conf => conf.MapFrom(p => p.PersonEvents
-                        .Select(pe => Mapper.Map<EventViewModel>(pe.Event))))
+                    .ForMember(t => t.Events, conf => conf.ResolveUsing<TimelineEventsCustomResolver>())
                     .ForMember(t => t.Parents, conf => conf.MapFrom(p => p.RelatedPersonRelationships
-                        .Where(rpr => rpr.RelationshipType == RelationshipType.Parent)
+                        .Where(rpr => rpr.RelationshipType == RelationshipType.Child)
                         .Select(rpr => rpr.PersonId)))
                     .ForMember(t => t.Children, conf => conf.MapFrom(p => p.RelatedPersonRelationships
-                        .Where(rpr => rpr.RelationshipType == RelationshipType.Child)
+                        .Where(rpr => rpr.RelationshipType == RelationshipType.Parent)
                         .Select(rpr => rpr.PersonId)))
                     .ForMember(t => t.Spouse, conf => conf.MapFrom(p => p.RelatedPersonRelationships
                         .Where(rpr => rpr.RelationshipType == RelationshipType.Spouse)

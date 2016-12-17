@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Timelines.Domain.Event;
 using Timelines.Domain.Person;
+using Timelines.Domain.Relationship;
 
 namespace Timelines.Persistence
 {
@@ -41,8 +42,8 @@ namespace Timelines.Persistence
                     Meaning = "Earthling Man, Mankind",
                     Start = -4026,
                     End = -3970,
-                    UnkownStart = 0,
-                    UnkownEnd = 0,
+                    UnknownStart = 0,
+                    UnknownEnd = 0,
                     ImageUrl = "http://i.imgur.com/00n9NWT.jpg",
                 };
 
@@ -70,8 +71,8 @@ namespace Timelines.Persistence
                     Meaning = "Living One",
                     Start = -4000,
                     End = -3970,
-                    UnkownStart = -4026,
-                    UnkownEnd = -3965,
+                    UnknownStart = -4026,
+                    UnknownEnd = -3965,
                     ImageUrl = "http://i.imgur.com/00n9NWT.jpg",
                 };
 

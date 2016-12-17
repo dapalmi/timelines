@@ -1,0 +1,56 @@
+﻿<div>
+    <div class="alert alert-success" ng-show="successMessage"><span ng-bind="successMessage"></span></div>
+    <div class="alert alert-danger" ng-show="errorMessage"><span ng-bind="errorMessage"></span></div>
+
+    <div class="text-center" ng-show="isBusy">
+        <i class="fa fa-circle-o-notch fa-spin"></i> Loading...
+    </div>
+
+    <br/>
+    <a ng-href="#/edit/{{personId}}" class="btn btn-sm btn-primary"><i class="fa fa-angle-left"></i> Back</a>
+    <br/>
+    <br/>
+
+    <h1>Edit Event For <span ng-bind="person.name"></span></h1>
+
+    <form novalidate name="editEventForm" ng-submit="editEvent()">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input class="form-control" type="text" id="name" name="name" ng-model="event.name" required />
+            <span ng-show="editEventForm.name.$error.required" class="text-warning" ng-cloak>Name is required</span>
+        </div>
+        <div class="form-group">
+            <label for="name">Year</label>
+            <input class="form-control" type="number" id="year" name="year" ng-model="event.year" min="-4030" max="2020" />
+            <span ng-show="editEventForm.start.$error.min || editEventForm.start.$error.max" class="text-warning" ng-cloak>Not a valid number</span>
+        </div>
+        <div class="form-group">
+            <label for="name">Image Url</label>
+            <input class="form-control" type="text" id="imageUrl" name="imageUrl" ng-model="event.imageUrl" />
+        </div>
+        <div class="form-group">
+            <label for="name">Text</label>
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" data-target="#markdown">Markdown</a></li>
+                <li><a data-toggle="tab" data-target="#plain">Plain</a></li>
+            </ul>
+            <div class="tab-content">
+                <div id="markdown" class="tab-pane fade in active">
+                    <textarea class="form-control" rows="5" id="text" name="text" ng-model="event.text" ng-change="convertMarkdown()"></textarea>
+                </div>
+                <div id="plain" class="tab-pane fade">
+                    <span ng-bind-html="convertedMarkdownText"></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Update"
+                   class="btn btn-sm btn-success"
+                   ng-disabled="editEventForm.$invalid" />
+        </div>
+    </form>
+
+    <br />
+    <br />
+    <button class="btn btn-sm btn-danger" ng-click="deleteEvent()">Delete</button>
+</div>

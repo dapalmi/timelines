@@ -26,5 +26,23 @@
     "inputFiles": [
       "wwwroot/js/timelinesController.js"
     ]
+  },
+  {
+    "outputFileName": "wwwroot/js/personsController.min.js",
+    "inputFiles": [
+      "wwwroot/js/personsController.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/simpleControls.min.js",
+    "inputFiles": [
+      "wwwroot/js/simpleControls.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/app-persons.min.js",
+    "inputFiles": [
+      "wwwroot/js/app-persons.js"
+    ]
   }
 ]

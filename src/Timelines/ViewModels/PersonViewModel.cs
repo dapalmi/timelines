@@ -12,8 +12,8 @@ namespace Timelines.ViewModels
         public string Meaning { get; set; }
         public int Start { get; set; }
         public int End { get; set; }
-        public int UnkownStart { get; set; }
-        public int UnkownEnd { get; set; }
+        public int UnknownStart { get; set; }
+        public int UnknownEnd { get; set; }
         public string ImageUrl { get; set; }
     }
 }

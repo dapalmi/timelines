@@ -4,137 +4,11 @@
 
     angular.module("app-timelines")
         .controller('timelinesController',
-        ['$scope', '$http', function($scope, $http) {
-                $scope.timelines = [
-                {
-                    "id": 1,
-                    "name": "Adam",
-                    "meaning": "Earthling Man, Mankind",
-                    "start": -4026,
-                    "end": -3970,
-                    "unknownStart": null,
-                    "unknownEnd": null,
-                    "image": "http://i.imgur.com/00n9NWT.jpg",
-                    "parents": [],
-                    "children": [3, 4],
-                    "spouse": [2],
-                    "siblings": [],
-                    "isSelected": false,
-                    "events": [
-                        {
-                            "name": "event 1",
-                            "year": -4026,
-                            "previousEventYear": null,
-                            "text": "#hello, markdown!"
-                        },
-                        {
-                            "name": "event 2",
-                            "year": -4005,
-                            "previousEventYear": -4026,
-                            "text": "[Google](http://www.google.de)"
-                        },
-                        {
-                            "name": "event 3",
-                            "year": -4004,
-                            "previousEventYear": -4005,
-                            "text": "Event 3 Text"
-                        },
-                        {
-                            "name": "event 4",
-                            "year": -4003,
-                            "previousEventYear": -4004,
-                            "text": "Event 4 Text"
-                        },
-                        {
-                            "name": "event 5",
-                            "year": -4000,
-                            "previousEventYear": -4003,
-                            "text": "Event 5 Text"
-                        },
-                        {
-                            "name": "event 6",
-                            "year": -3975,
-                            "previousEventYear": -4000,
-                            "text": "Event 6 Text"
-                        }
-                    ]
-                },
-                {
-                    "id": 2,
-                    "name": "Eve",
-                    "meaning": "Living One",
-                    "start": -4000,
-                    "end": -3970,
-                    "unknownStart": -4026,
-                    "unknownEnd": -3965,
-                    "image": "http://i.imgur.com/00n9NWT.jpg",
-                    "parents": [],
-                    "children": [3, 4],
-                    "spouse": [1],
-                    "siblings": [],
-                    "isSelected": false,
-                    "events": [
-                        {
-                            "name": "event 1",
-                            "year": -3975,
-                            "previousEventYear": null,
-                            "text": "Event 1 Text"
-                        },
-                        {
-                            "name": "event 2",
-                            "year": -3965,
-                            "previousEventYear": -3975,
-                            "text": "Event 2 Text"
-                        }
-                    ]
-                },
-                {
-                    "id": 3,
-                    "name": "Cain",
-                    "meaning": "Something Produced",
-                    "start": -3990,
-                    "end": -3960,
-                    "unknownStart": -4026,
-                    "unknownEnd": -3955,
-                    "image": null,
-                    "parents": [1, 2],
-                    "children": [],
-                    "spouse": [],
-                    "siblings": [4],
-                    "isSelected": false,
-                    "events": [
-                        {
-                            "name": "event 1",
-                            "year": -3995,
-                            "previousEventYear": null,
-                            "text": "Event 1 Text"
-                        }
-                    ]
-                },
-                {
-                    "id": 4,
-                    "name": "Abel",
-                    "meaning": "possibly, Exhalation; Vanity",
-                    "start": -3985,
-                    "end": -3960,
-                    "unknownStart": -4026,
-                    "unknownEnd": -3955,
-                    "image": "http://i.imgur.com/00n9NWT.jpg",
-                    "parents": [1, 2],
-                    "children": [],
-                    "spouse": [],
-                    "siblings": [3],
-                    "isSelected": false,
-                    "events": [
-                        {
-                            "name": "event 1",
-                            "year": -3985,
-                            "previousEventYear": null,
-                            "text": "Event 1 Text"
-                        }
-                    ]
-                }
-                ]
+        ['$scope', '$http', function ($scope, $http) {
+
+            $scope.isBusy = true;
+
+            $scope.timelines = [];
 
                 $scope.config = {
                     "intervalWidth": 360,
@@ -166,12 +40,25 @@
 
                 $scope.sizes = getSizes();
                 $scope.pixelsPerYear = $scope.config.intervalWidth / $scope.config.yearsPerInterval;
-                $scope.changeConfig = function (year) {
+                $scope.changeConfig = function () {
                     $scope.currentYear = $scope.selectedYear.value;
                     $scope.sizes = getSizes();
                     $scope.pixelsPerYear = $scope.config.intervalWidth / $scope.config.yearsPerInterval;
                 }
 
+                $http.get("/api/timelines")
+                    .then(function (response) {
+                        //Success
+                        angular.copy(response.data, $scope.timelines);
+                        $scope.changeConfig();
+                    },
+                        function (error) {
+                            //Failure
+                            $scope.errorMessage = "Failed to load data";
+                        })
+                    .finally(function () {
+                        $scope.isBusy = false;
+                    });
 
 
                 $scope.parents = [];
@@ -185,16 +72,16 @@
                     $scope.children = [];
                     $scope.spouse = [];
                     $scope.siblings = [];
-                    if (person[0].parents.length) {
+                    if (person[0].parents && person[0].parents.length) {
                         $scope.parents.push.apply($scope.parents, person[0].parents);
                     }
-                    if (person[0].children.length) {
+                    if (person[0].children && person[0].children.length) {
                         $scope.children.push.apply($scope.children, person[0].children);
                     }
-                    if (person[0].spouse.length) {
+                    if (person[0].spouse && person[0].spouse.length) {
                         $scope.spouse.push.apply($scope.spouse, person[0].spouse);
                     }
-                    if (person[0].siblings.length) {
+                    if (person[0].siblings && person[0].siblings.length) {
                         $scope.siblings.push.apply($scope.siblings, person[0].siblings);
                     }
                 }
@@ -318,7 +205,7 @@
                     if (imageUrl) {
                         return imageUrl;
                     }
-                    return "./placeholder.png"
+                    return "./images/placeholder.png";
                 }
 
                 $scope.$watch("sizes", function () {
@@ -450,10 +337,10 @@
                         function (data) {
                             var start = data.start;
                             var end = data.end;
-                            if (data.unknownStart !== null && data.unknownStart < data.start) {
+                            if (data.unknownStart !== null && data.unknownStart !== 0 && data.unknownStart < data.start) {
                                 start = data.unknownStart;
                             }
-                            if (data.unknownEnd !== null && data.unknownEnd > data.end) {
+                            if (data.unknownEnd !== null && data.unknownEnd !== 0 && data.unknownEnd > data.end) {
                                 end = data.unknownEnd;
                             }
                             return (start >= intervalStart && start < intervalEnd) || (end > intervalStart && end <= intervalEnd) || (start < intervalStart && end > intervalEnd)
@@ -465,10 +352,10 @@
                     var range = { "start": 0, "end": 0 }
                     range.start = timeline.start;
                     range.end = timeline.end;
-                    if (timeline.unknownStart !== null && timeline.unknownStart < timeline.start) {
+                    if (timeline.unknownStart !== null && timeline.unknownStart !== 0 && timeline.unknownStart < timeline.start) {
                         range.start = timeline.unknownStart;
                     }
-                    if (timeline.unknownEnd !== null && timeline.unknownEnd > timeline.end) {
+                    if (timeline.unknownEnd !== null && timeline.unknownEnd !== 0 && timeline.unknownEnd > timeline.end) {
                         range.end = timeline.unknownEnd;
                     }
                     return range;
@@ -510,10 +397,10 @@
 
                     //Adjust width so dot (width: 20px) is centered
                     width -= 10;
-                    if (event.previousEventYear !== null && event.previousEventYear >= startYear) {
+                    if (event.previousEventYear !== null && event.previousEventYear !== 0 && event.previousEventYear >= startYear) {
                         width -= 10;
                     }
-                    if (event.previousEventYear !== null && event.previousEventYear === startYear) {
+                    if (event.previousEventYear !== null && event.previousEventYear !== 0 && event.previousEventYear === startYear) {
                         width -= 10;
                     }
                     if (event.year === endYear) {
@@ -524,7 +411,7 @@
                 function getTimelineStartYear(timeline) {
                     var startYear = $scope.currentYear - ($scope.config.yearsPerInterval / 2);
                     var start = timeline.start;
-                    if (timeline.unknownStart !== null && timeline.unknownStart < timeline.start) {
+                    if (timeline.unknownStart !== null && timeline.unknownStart !== 0 && timeline.unknownStart < timeline.start) {
                         start = timeline.unknownStart;
                     }
                     if (start < startYear) {
@@ -538,7 +425,7 @@
                     var startYear = $scope.currentYear - ($scope.config.yearsPerInterval / 2);
                     var endYear = startYear + numberOfIntervals * $scope.config.yearsPerInterval;
                     var start = timeline.start;
-                    if (timeline.unknownStart !== null && timeline.unknownStart < timeline.start) {
+                    if (timeline.unknownStart !== null && timeline.unknownStart !== 0 && timeline.unknownStart < timeline.start) {
                         start = timeline.unknownStart;
                     }
                     if (start > endYear) {
@@ -556,13 +443,13 @@
                     var endYear = startYear + numberOfIntervals * $scope.config.yearsPerInterval;
                     var start = timeline.start;
                     var end = timeline.end;
-                    if (timeline.unknownStart !== null && timeline.unknownStart < timeline.start) {
+                    if (timeline.unknownStart !== null && timeline.unknownStart !== 0 && timeline.unknownStart < timeline.start) {
                         start = timeline.unknownStart;
                     }
                     if (start < startYear) {
                         start = startYear;
                     }
-                    if (timeline.unknownEnd !== null && timeline.unknownEnd > timeline.end) {
+                    if (timeline.unknownEnd !== null && timeline.unknownEnd !== 0 && timeline.unknownEnd > timeline.end) {
                         end = timeline.unknownEnd;
                     }
                     if (end > endYear) {
@@ -578,7 +465,7 @@
                     var width = 0;
                     var startYear = $scope.currentYear - ($scope.config.yearsPerInterval / 2);
                     var endYear = startYear + numberOfIntervals * $scope.config.yearsPerInterval;
-                    if (timeline.unknownStart !== null && timeline.unknownStart < timeline.start) {
+                    if (timeline.unknownStart !== null && timeline.unknownStart !== 0 && timeline.unknownStart < timeline.start) {
                         var start = timeline.unknownStart;
                         var end = timeline.start;
                         if (start < startYear) {
@@ -616,7 +503,7 @@
                     var width = 0;
                     var startYear = $scope.currentYear - ($scope.config.yearsPerInterval / 2);
                     var endYear = startYear + numberOfIntervals * $scope.config.yearsPerInterval;
-                    if (timeline.unknownEnd !== null && timeline.unknownEnd > timeline.end) {
+                    if (timeline.unknownEnd !== null && timeline.unknownEnd !== 0 && timeline.unknownEnd > timeline.end) {
                         var start = timeline.end;
                         var end = timeline.unknownEnd;
                         if (start < startYear) {

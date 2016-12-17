@@ -6,7 +6,9 @@
     <script src="~/lib/angular/angular.js"></script>
     <script src="~/lib/angular-animate/angular-animate.js"></script>
     <script src="~/lib/angular-sanitize/angular-sanitize.js"></script>
+    <script src="~/lib/angular-route/angular-route.js"></script>
     <script src="~/lib/showdown/dist/showdown.js"></script>
+    <script src="~/js/simpleControls.js"></script>
     <script src="~/js/app-timelines.js" asp-append-version="true"></script>
     <script src="~/js/timelinesController.js" asp-append-version="true"></script>
 </environment>
@@ -21,9 +23,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-sanitize.min.js"
             asp-fallback-src="~/lib/angular-sanitize/angular-sanitize.min.js">
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-route.min.js"
+            asp-fallback-src="~/lib/angular-route/angular-route.min.js">
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.5.1/showdown.min.js"
             asp-fallback-src="~/lib/showdown/dist/showdown.min.js">
     </script>
+    <script src="~/js/simpleControls.min.js" asp-append-version="true"></script>
     <script src="~/js/app-timelines.min.js" asp-append-version="true"></script>
     <script src="~/js/timelinesController.min.js" asp-append-version="true"></script>
 </environment>
@@ -54,7 +60,11 @@
             </div>
         </div>
     </div>
-    <div ng-repeat="size in sizes">
+    <div class="danger" ng-show="errorMessage"><span ng-bind="errorMessage"></span></div>
+    <div class="text-center" ng-show="isBusy">
+        <i class="fa fa-circle-o-notch fa-spin"></i> Loading...
+    </div>
+    <div ng-repeat="size in sizes" ng-cloak>
         <div id="timelinePanel" class="center-block" ng-class="getTimelineClass(size.name)" ng-style="getTimelineWidth(size.name)">
             <div class="text-center">
                 <i class="fa fa-fast-backward fa-2x" role="button" ng-click="fastBackward(size.name)" title="Go to the beginning of the timeline"></i>
@@ -69,7 +79,7 @@
                 <div class="pull-left" ng-style="getIntervalWidth()" ng-repeat="interval in size.intervals track by $index">
                     <div class="text-center">
                         <h2 ng-bind="interval"></h2>
-                        <i class="fa fa-angle-down fa-2x"></i>
+                        @*<i class="fa fa-caret-down fa-2x"></i>*@
                     </div>
                 </div>
             </div>
@@ -81,7 +91,7 @@
                         <div ng-repeat="event in getCurrentEvents(timeline.events, size.name) track by $index">
                             <div class="pull-left void" ng-style="getEventVoidWidth(event, timeline, size.name)"></div>
                             <div class="pull-left text-center" role="button" ng-attr-title="{{getEventTitle(event)}}" data-toggle="modal" data-target="#eventModal-{{size.name}}-{{timeline.id}}-{{$index}}">
-                                <i class="fa fa-circle fa-lg fa-fw"></i>
+                                <i class="fa fa-caret-down fa-2x fa-fw"></i>
                             </div>
                             <div class="modal fade" id="eventModal-{{size.name}}-{{timeline.id}}-{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                 <div class="modal-dialog" role="document">
@@ -92,7 +102,7 @@
                                                 <h2>{{timeline.name}}</h2>
                                                 <h4>[{{timeline.meaning}}]</h4>
                                                 <h4>{{getTimelineRangeString(timeline)}}</h4>
-                                                <img ng-src="{{getImageSrc(timeline.image)}}" alt="{{timeline.name}}" class="img-circle">
+                                                <img ng-src="{{getImageSrc(timeline.imageUrl)}}" alt="{{timeline.name}}" class="img-circle">
                                             </div>
                                         </div>
                                         <div class="modal-body">
@@ -138,3 +148,4 @@
         </div>
     </div>
 </div>
+

@@ -205,9 +205,9 @@ namespace Timelines.Migrations
 
                     b.Property<int>("Start");
 
-                    b.Property<int>("UnkownEnd");
+                    b.Property<int>("UnknownEnd");
 
-                    b.Property<int>("UnkownStart");
+                    b.Property<int>("UnknownStart");
 
                     b.HasKey("Id");
 

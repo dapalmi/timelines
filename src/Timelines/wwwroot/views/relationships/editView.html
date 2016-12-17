@@ -1,0 +1,32 @@
+﻿<div>
+    <div class="alert alert-success" ng-show="successMessage"><span ng-bind="successMessage"></span></div>
+    <div class="alert alert-danger" ng-show="errorMessage"><span ng-bind="errorMessage"></span></div>
+
+    <div class="text-center" ng-show="isBusy">
+        <i class="fa fa-circle-o-notch fa-spin"></i> Loading...
+    </div>
+
+    <br/>
+    <a ng-href="#/edit/{{personId}}" class="btn btn-sm btn-primary"><i class="fa fa-angle-left"></i> Back</a>
+    <br/>
+    <br/>
+
+    <h1>Edit Relationship For <span ng-bind="person.name"></span> With <span ng-bind="relationship.relatedPerson.name"></span></h1>
+
+    <form novalidate name="editRelationshipForm" ng-submit="editRelationship()">
+        <div class="form-group">
+            <label for="relationshipType">Relationship Type</label>
+            <select class="form-control" id="relationshipType" name="relationshipType" ng-model="relationship.relationshipType" ng-options="x for x in relationshipTypes" required></select>
+            <span ng-show="editRelationshipForm.relationshipType.$error.required" class="text-warning" ng-cloak>Relationship Type is required</span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Update"
+                   class="btn btn-sm btn-success"
+                   ng-disabled="editRelationshipForm.$invalid"/>
+        </div>
+    </form>
+
+    <br />
+    <br />
+    <button class="btn btn-sm btn-danger" ng-click="deleteRelationship()">Delete</button>
+</div>

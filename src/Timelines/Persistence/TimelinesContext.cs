@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Timelines.Domain;
 using Timelines.Domain.Event;
 using Timelines.Domain.Person;
+using Timelines.Domain.Relationship;
 
 namespace Timelines.Persistence
 {
