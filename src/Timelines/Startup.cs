@@ -115,6 +115,9 @@ namespace Timelines
                         .Select(rpr => rpr.PersonId)))
                     .ForMember(t => t.Spouse, conf => conf.MapFrom(p => p.RelatedPersonRelationships
                         .Where(rpr => rpr.RelationshipType == RelationshipType.Spouse)
+                        .Select(rpr => rpr.PersonId)))
+                    .ForMember(t => t.Siblings, conf => conf.MapFrom(p => p.RelatedPersonRelationships
+                        .Where(rpr => rpr.RelationshipType == RelationshipType.Sibling)
                         .Select(rpr => rpr.PersonId)));
             });
 

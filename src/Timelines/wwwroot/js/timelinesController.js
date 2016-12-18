@@ -17,7 +17,7 @@
                     "endYear": 2020
                 };
                 $scope.currentYear = $scope.config.startYear;
-                $scope.intervalYears = [1, 5, 10, 50, 100];
+                $scope.intervalYears = [1, 5, 10, 50, 100, 500, 1000];
                 $scope.years = [];
                 for (var i = 0; i < ($scope.config.endYear - $scope.currentYear + 1) ; i++) {
                     var value = $scope.currentYear + i;

@@ -24,6 +24,11 @@
             <input class="form-control" type="text" id="meaning" name="meaning" ng-model="person.meaning" />
         </div>
         <div class="form-group">
+            <label for="name">Unknown Start</label>
+            <input class="form-control" type="number" id="unknownStart" name="unknownStart" ng-model="person.unknownStart" min="-4030" max="2020" />
+            <span ng-show="editPersonForm.unknownStart.$error.min || personForm.unknownStart.$error.max" class="text-warning" ng-cloak>Not a valid number</span>
+        </div>
+        <div class="form-group">
             <label for="name">Start</label>
             <input class="form-control" type="number" id="start" name="start" ng-model="person.start" min="-4030" max="2020" />
             <span ng-show="editPersonForm.start.$error.min || newPersonForm.start.$error.max" class="text-warning" ng-cloak>Not a valid number</span>
@@ -32,11 +37,6 @@
             <label for="name">End</label>
             <input class="form-control" type="number" id="end" name="end" ng-model="person.end" min="-4030" max="2020" />
             <span ng-show="editPersonForm.end.$error.min || personForm.end.$error.max" class="text-warning" ng-cloak>Not a valid number</span>
-        </div>
-        <div class="form-group">
-            <label for="name">Unknown Start</label>
-            <input class="form-control" type="number" id="unknownStart" name="unknownStart" ng-model="person.unknownStart" min="-4030" max="2020" />
-            <span ng-show="editPersonForm.unknownStart.$error.min || personForm.unknownStart.$error.max" class="text-warning" ng-cloak>Not a valid number</span>
         </div>
         <div class="form-group">
             <label for="name">Unknown End</label>
