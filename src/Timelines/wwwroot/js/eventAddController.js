@@ -7,6 +7,7 @@
         ['$scope', '$http', '$timeout', '$routeParams', function ($scope, $http, $timeout, $routeParams) {
 
             $scope.personId = $routeParams.personId;
+            $scope.person = {};
             $scope.newEvent = {};
             $scope.successMessage = "";
             $scope.errorMessage = "";
@@ -18,6 +19,19 @@
                 var htmlText = converter.makeHtml($scope.newEvent.text);
                 $scope.convertedMarkdownText = htmlText;
             };
+
+            $http.get("/api/persons/" + $scope.personId)
+                .then(function (response) {
+                    //Success
+                    $scope.person = response.data;
+                },
+                    function (error) {
+                        //Failure
+                        $scope.errorMessage = "Failed to load data";
+                    })
+                .finally(function () {
+                    $scope.isBusy = false;
+                });
 
             $scope.addEvent = function () {
                 $scope.isBusy = true;
