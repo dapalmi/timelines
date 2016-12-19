@@ -14,12 +14,8 @@
                     data: 'persons',
                     columnDefs: [
                         { name: 'name' },
-                        { name: 'meaning' },
-                        { name: 'start' },
-                        { name: 'end' },
                         { name: 'unknownStart' },
-                        { name: 'unknownEnd' },
-                        { name: 'imageUrl' },
+                        { name: 'start' },
                         { field: 'id', displayName: '', enableSorting: false, cellTemplate: '<a ng-href="#/edit/{{COL_FIELD}}" class="btn btn-sm btn-primary">Edit</a>' }
                     ]
                 };

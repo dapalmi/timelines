@@ -19,8 +19,6 @@
                 columnDefs: [
                         { name: 'name' },
                         { name: 'year' },
-                        { name: 'text' },
-                        { name: 'imageUrl' },
                         { field: 'id', displayName: '', enableSorting: false, cellTemplate: '<a ng-href="#/eventEdit/{{grid.appScope.personId}}/{{COL_FIELD}}" class="btn btn-sm btn-primary">Edit</a>' }
                 ]
             };
