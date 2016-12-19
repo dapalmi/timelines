@@ -11,10 +11,10 @@ namespace Timelines.ViewModels
         public int Id { get; set; }
         public string Name { get; set; }
         public string Meaning { get; set; }
-        public int Start { get; set; }
-        public int End { get; set; }
-        public int UnknownStart { get; set; }
-        public int UnknownEnd { get; set; }
+        public int? Start { get; set; }
+        public int? End { get; set; }
+        public int? UnknownStart { get; set; }
+        public int? UnknownEnd { get; set; }
         public string ImageUrl { get; set; }
         public IEnumerable<EventViewModel> Events { get; set; }
         public IEnumerable<int> Parents { get; set; }

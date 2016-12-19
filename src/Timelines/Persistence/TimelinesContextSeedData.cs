@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Timelines.Domain.Event;
 using Timelines.Domain.Person;
 using Timelines.Domain.Relationship;
@@ -24,6 +25,8 @@ namespace Timelines.Persistence
 
         public async Task EnsureSeedData()
         {
+            _context.Database.Migrate();
+
             if (await _userManager.FindByEmailAsync("dapalmi@t-online.de") == null)
             {
                 var user = new IdentityUser

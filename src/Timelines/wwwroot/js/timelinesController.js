@@ -337,10 +337,10 @@
                         function (data) {
                             var start = data.start;
                             var end = data.end;
-                            if (data.unknownStart !== null && data.unknownStart !== 0 && data.unknownStart < data.start) {
+                            if (data.unknownStart !== null && data.unknownStart < data.start) {
                                 start = data.unknownStart;
                             }
-                            if (data.unknownEnd !== null && data.unknownEnd !== 0 && data.unknownEnd > data.end) {
+                            if (data.unknownEnd !== null && data.unknownEnd > data.end) {
                                 end = data.unknownEnd;
                             }
                             return (start >= intervalStart && start < intervalEnd) || (end > intervalStart && end <= intervalEnd) || (start < intervalStart && end > intervalEnd)
@@ -352,10 +352,10 @@
                     var range = { "start": 0, "end": 0 }
                     range.start = timeline.start;
                     range.end = timeline.end;
-                    if (timeline.unknownStart !== null && timeline.unknownStart !== 0 && timeline.unknownStart < timeline.start) {
+                    if (timeline.unknownStart !== null && timeline.unknownStart < timeline.start) {
                         range.start = timeline.unknownStart;
                     }
-                    if (timeline.unknownEnd !== null && timeline.unknownEnd !== 0 && timeline.unknownEnd > timeline.end) {
+                    if (timeline.unknownEnd !== null && timeline.unknownEnd > timeline.end) {
                         range.end = timeline.unknownEnd;
                     }
                     return range;
@@ -397,10 +397,10 @@
 
                     //Adjust width so dot (width: 20px) is centered
                     width -= 10;
-                    if (event.previousEventYear !== null && event.previousEventYear !== 0 && event.previousEventYear >= startYear) {
+                    if (event.previousEventYear !== null && event.previousEventYear >= startYear) {
                         width -= 10;
                     }
-                    if (event.previousEventYear !== null && event.previousEventYear !== 0 && event.previousEventYear === startYear) {
+                    if (event.previousEventYear !== null && event.previousEventYear === startYear) {
                         width -= 10;
                     }
                     if (event.year === endYear) {
@@ -411,7 +411,7 @@
                 function getTimelineStartYear(timeline) {
                     var startYear = $scope.currentYear - ($scope.config.yearsPerInterval / 2);
                     var start = timeline.start;
-                    if (timeline.unknownStart !== null && timeline.unknownStart !== 0 && timeline.unknownStart < timeline.start) {
+                    if (timeline.unknownStart !== null && timeline.unknownStart < timeline.start) {
                         start = timeline.unknownStart;
                     }
                     if (start < startYear) {
@@ -425,7 +425,7 @@
                     var startYear = $scope.currentYear - ($scope.config.yearsPerInterval / 2);
                     var endYear = startYear + numberOfIntervals * $scope.config.yearsPerInterval;
                     var start = timeline.start;
-                    if (timeline.unknownStart !== null && timeline.unknownStart !== 0 && timeline.unknownStart < timeline.start) {
+                    if (timeline.unknownStart !== null && timeline.unknownStart < timeline.start) {
                         start = timeline.unknownStart;
                     }
                     if (start > endYear) {
@@ -443,13 +443,13 @@
                     var endYear = startYear + numberOfIntervals * $scope.config.yearsPerInterval;
                     var start = timeline.start;
                     var end = timeline.end;
-                    if (timeline.unknownStart !== null && timeline.unknownStart !== 0 && timeline.unknownStart < timeline.start) {
+                    if (timeline.unknownStart !== null && timeline.unknownStart < timeline.start) {
                         start = timeline.unknownStart;
                     }
                     if (start < startYear) {
                         start = startYear;
                     }
-                    if (timeline.unknownEnd !== null && timeline.unknownEnd !== 0 && timeline.unknownEnd > timeline.end) {
+                    if (timeline.unknownEnd !== null && timeline.unknownEnd > timeline.end) {
                         end = timeline.unknownEnd;
                     }
                     if (end > endYear) {
@@ -465,7 +465,7 @@
                     var width = 0;
                     var startYear = $scope.currentYear - ($scope.config.yearsPerInterval / 2);
                     var endYear = startYear + numberOfIntervals * $scope.config.yearsPerInterval;
-                    if (timeline.unknownStart !== null && timeline.unknownStart !== 0 && timeline.unknownStart < timeline.start) {
+                    if (timeline.unknownStart !== null && timeline.unknownStart < timeline.start) {
                         var start = timeline.unknownStart;
                         var end = timeline.start;
                         if (start < startYear) {
@@ -503,7 +503,7 @@
                     var width = 0;
                     var startYear = $scope.currentYear - ($scope.config.yearsPerInterval / 2);
                     var endYear = startYear + numberOfIntervals * $scope.config.yearsPerInterval;
-                    if (timeline.unknownEnd !== null && timeline.unknownEnd !== 0 && timeline.unknownEnd > timeline.end) {
+                    if (timeline.unknownEnd !== null && timeline.unknownEnd > timeline.end) {
                         var start = timeline.end;
                         var end = timeline.unknownEnd;
                         if (start < startYear) {

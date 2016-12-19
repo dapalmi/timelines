@@ -108,10 +108,10 @@ namespace Timelines
                 config.CreateMap<Person, TimelineViewModel>()
                     .ForMember(t => t.Events, conf => conf.ResolveUsing<TimelineEventsCustomResolver>())
                     .ForMember(t => t.Parents, conf => conf.MapFrom(p => p.RelatedPersonRelationships
-                        .Where(rpr => rpr.RelationshipType == RelationshipType.Child)
+                        .Where(rpr => rpr.RelationshipType == RelationshipType.Parent)
                         .Select(rpr => rpr.PersonId)))
                     .ForMember(t => t.Children, conf => conf.MapFrom(p => p.RelatedPersonRelationships
-                        .Where(rpr => rpr.RelationshipType == RelationshipType.Parent)
+                        .Where(rpr => rpr.RelationshipType == RelationshipType.Child)
                         .Select(rpr => rpr.PersonId)))
                     .ForMember(t => t.Spouse, conf => conf.MapFrom(p => p.RelatedPersonRelationships
                         .Where(rpr => rpr.RelationshipType == RelationshipType.Spouse)
