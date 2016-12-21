@@ -398,7 +398,9 @@
                     width = ((end - start) * $scope.pixelsPerYear);
 
                     //Adjust width so dot (width: 20px) is centered
-                    width -= 10;
+                    if (event.previousEventYear !== null || end === start) {
+                        width -= 10;
+                    }
                     if (event.previousEventYear !== null && event.previousEventYear >= startYear) {
                         width -= 10;
                     }
