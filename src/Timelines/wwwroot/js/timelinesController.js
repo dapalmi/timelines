@@ -365,7 +365,7 @@
 
                 function getPersonById(id) {
                     return $scope.timelines.filter(
-                        function (data) { return data.id == id }
+                        function (data) { return data.id === id }
                     );
                 }
 
