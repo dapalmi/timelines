@@ -26,12 +26,14 @@
         </div>
         <div class="form-group">
             <label for="name">Start</label>
-            <input class="form-control" type="number" id="start" name="start" ng-model="newPerson.start" min="-4030" max="2020"/>
+            <input class="form-control" type="number" id="start" name="start" ng-model="newPerson.start" min="-4030" max="2020" required/>
+            <span ng-show="newPersonForm.start.$error.required" class="text-warning" ng-cloak>Start year is required</span>
             <span ng-show="newPersonForm.start.$error.min || newPersonForm.start.$error.max" class="text-warning" ng-cloak>Not a valid number</span>
         </div>
         <div class="form-group">
             <label for="name">End</label>
-            <input class="form-control" type="number" id="end" name="end" ng-model="newPerson.end" min="-4030" max="2020"/>
+            <input class="form-control" type="number" id="end" name="end" ng-model="newPerson.end" min="-4030" max="2020" required/>
+            <span ng-show="newPersonForm.end.$error.required" class="text-warning" ng-cloak>End year is required</span>
             <span ng-show="newPersonForm.end.$error.min || newPersonForm.end.$error.max" class="text-warning" ng-cloak>Not a valid number</span>
         </div>
         <div class="form-group">

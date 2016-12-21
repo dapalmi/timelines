@@ -12,7 +12,7 @@
 
                 $scope.config = {
                     "intervalWidth": 360,
-                    "yearsPerInterval": 100,
+                    "yearsPerInterval": 500,
                     "startYear": -4030,
                     "endYear": 2020
                 };
@@ -244,7 +244,8 @@
                     $scope.getUnknownStartTimelineName = function (timeline, size) {
                         var unknownStartWidth = calculateUnknownStartWidth(timeline, size);
                         var mainWidth = calculateMainWidth(timeline, size);
-                        if (mainWidth === 0 && unknownStartWidth > 0) {
+                        var unknownEndWidth = calculateUnknownEndWidth(timeline, size);
+                        if (mainWidth === 0 && unknownStartWidth > 0 && unknownStartWidth > unknownEndWidth) {
                             return timeline.name;
                         }
                         return "";
@@ -257,9 +258,10 @@
                         return "";
                     }
                     $scope.getUnknownEndTimelineName = function (timeline, size) {
-                        var unknownEndWidth = calculateUnknownEndWidth(timeline, size);
+                        var unknownStartWidth = calculateUnknownStartWidth(timeline, size);
                         var mainWidth = calculateMainWidth(timeline, size);
-                        if (mainWidth === 0 && unknownEndWidth > 0) {
+                        var unknownEndWidth = calculateUnknownEndWidth(timeline, size);
+                        if (mainWidth === 0 && unknownEndWidth > 0 && unknownEndWidth > unknownStartWidth) {
                             return timeline.name;
                         }
                         return "";

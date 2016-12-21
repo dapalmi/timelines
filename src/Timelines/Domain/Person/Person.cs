@@ -12,8 +12,8 @@ namespace Timelines.Domain.Person
     {
         public string Name { get; set; }
         public string Meaning { get; set; }
-        public int? Start { get; set; }
-        public int? End { get; set; }
+        public int Start { get; set; }
+        public int End { get; set; }
         public int? UnknownStart { get; set; }
         public int? UnknownEnd { get; set; }
         public string ImageUrl { get; set; }
