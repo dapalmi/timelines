@@ -159,12 +159,18 @@
                     if (range.start < 0) {
                         rangeString += range.start * -1 + " B.C.E";
                     }
+                    else if (range.start === 0) {
+                        rangeString += "?";
+                    }
                     else {
                         rangeString += range.start + " C.E";
                     }
                     rangeString += " - ";
                     if (range.end < 0) {
                         rangeString += range.end * -1 + " B.C.E";
+                    }
+                    else if (range.end === 0) {
+                        rangeString += "?";
                     }
                     else {
                         rangeString += range.end + " C.E";
@@ -355,10 +361,12 @@
                     range.start = timeline.start;
                     range.end = timeline.end;
                     if (timeline.unknownStart !== null && timeline.unknownStart < timeline.start) {
-                        range.start = timeline.unknownStart;
+                        //range.start = timeline.unknownStart;
+                        range.start = 0;
                     }
                     if (timeline.unknownEnd !== null && timeline.unknownEnd > timeline.end) {
-                        range.end = timeline.unknownEnd;
+                        //range.end = timeline.unknownEnd;
+                        range.end = 0;
                     }
                     return range;
                 }
