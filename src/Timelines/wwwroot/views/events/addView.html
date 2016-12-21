@@ -8,41 +8,65 @@
     <br/>
     
     <h1>Add New Event For <span ng-bind="person.name"></span></h1>
-
-    <form novalidate name="newEventForm" ng-submit="addEvent()">
-        <div class="form-group">
-            <label for="name">Name</label>
-            <input class="form-control" type="text" id="name" name="name" ng-model="newEvent.name" required/>
-            <span ng-show="newEventForm.name.$error.required" class="text-warning" ng-cloak>Name is required</span>
-        </div>
-        <div class="form-group">
-            <label for="name">Year</label>
-            <input class="form-control" type="number" id="year" name="year" ng-model="newEvent.year" min="-4030" max="2020"/>
-            <span ng-show="newEventForm.year.$error.min || newEventForm.year.$error.max" class="text-warning" ng-cloak>Not a valid number</span>
-        </div>
-        <div class="form-group">
-            <label for="name">Image Url</label>
-            <input class="form-control" type="text" id="imageUrl" name="imageUrl" ng-model="newEvent.imageUrl"/>
-        </div>
-        <div class="form-group">
-            <label for="name">Text</label>
-            <ul class="nav nav-tabs">
-                <li class="active"><a data-toggle="tab" data-target="#markdown">Markdown</a></li>
-                <li><a data-toggle="tab" data-target="#plain">Plain</a></li>
-            </ul>
-            <div class="tab-content">
-                <div id="markdown" class="tab-pane fade in active">
-                    <textarea class="form-control" rows="5" id="text" name="text" ng-model="newEvent.text" ng-change="convertMarkdown()"></textarea>
-                </div>
-                <div id="plain" class="tab-pane fade">
-                    <span ng-bind-html="convertedMarkdownText"></span>
+    <br />
+    
+    <div class="form-group">
+        <label for="name">Add Existing Event </label>
+        <input type="checkbox" ng-model="isAddExistingEvent" />
+    </div>
+    
+    <div ng-show="isAddExistingEvent">
+        <form novalidate name="existingEventForm" ng-submit="addExistingEvent()">
+            <div class="form-group">
+                <label for="events">Events</label>
+                <select class="form-control" id="events" name="events" ng-model="existingEvent.event" ng-options="x.name for x in events" required></select>
+                <span ng-show="existingEventForm.$error.required" class="text-warning" ng-cloak>Event is required</span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Add"
+                       class="btn btn-sm btn-success"
+                       ng-disabled="existingEventForm.$invalid" />
+            </div>
+        </form>
+    </div>
+    
+    <div ng-hide="isAddExistingEvent">
+        <form novalidate name="newEventForm" ng-submit="addNewEvent()">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input class="form-control" type="text" id="name" name="name" ng-model="newEvent.name" required />
+                <span ng-show="newEventForm.name.$error.required" class="text-warning" ng-cloak>Name is required</span>
+            </div>
+            <div class="form-group">
+                <label for="name">Year</label>
+                <input class="form-control" type="number" id="year" name="year" ng-model="newEvent.year" min="-4030" max="2020" />
+                <span ng-show="newEventForm.year.$error.min || newEventForm.year.$error.max" class="text-warning" ng-cloak>Not a valid number</span>
+            </div>
+            <div class="form-group">
+                <label for="name">Image Url</label>
+                <input class="form-control" type="text" id="imageUrl" name="imageUrl" ng-model="newEvent.imageUrl" />
+            </div>
+            <div class="form-group">
+                <label for="name">Text</label>
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" data-target="#markdown">Markdown</a></li>
+                    <li><a data-toggle="tab" data-target="#plain">Plain</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="markdown" class="tab-pane fade in active">
+                        <textarea class="form-control" rows="5" id="text" name="text" ng-model="newEvent.text" ng-change="convertMarkdown()"></textarea>
+                    </div>
+                    <div id="plain" class="tab-pane fade">
+                        <span ng-bind-html="convertedMarkdownText"></span>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="form-group">
-            <input type="submit" value="Add"
-                   class="btn btn-sm btn-success"
-                   ng-disabled="newEventForm.$invalid"/>
-        </div>
-    </form>
+            <div class="form-group">
+                <input type="submit" value="Add"
+                       class="btn btn-sm btn-success"
+                       ng-disabled="newEventForm.$invalid" />
+            </div>
+        </form>        
+    </div>
+
 </div>

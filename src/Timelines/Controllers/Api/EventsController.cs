@@ -94,6 +94,26 @@ namespace Timelines.Controllers.Api
             return BadRequest("Failed to save event");
         }
 
+        // POST api/values
+        [HttpPost("/api/persons/{personId}/events/{eventId}")]
+        public async Task<IActionResult> Post(int personId, int eventId)
+        {
+            var newEvent = _eventService.ById(eventId);
+            if (await _eventService.Add(personId, newEvent))
+            {
+                return Created($"api/events/{newEvent.Name}", Mapper.Map<EventViewModel>(newEvent));
+            }
+
+            _logger.LogError("Failed to save event to database");
+
+            var errorMessage = string.Join(" | ", ModelState.Values
+                .SelectMany(v => v.Errors)
+                .Select(e => e.ErrorMessage));
+            _logger.LogError($"Model not valid ({errorMessage})");
+
+            return BadRequest("Failed to save event");
+        }
+
         // PUT api/values/5
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody]EventViewModel eventViewModel)

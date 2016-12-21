@@ -30,7 +30,7 @@ namespace Timelines.Service
         {
             return _eventRepository.GetAll()
                 .Include(e => e.PersonEvents)
-                    .ThenInclude(pe => pe.Person);
+                .ThenInclude(pe => pe.Person);
         }
 
         public Event ById(int id)
@@ -38,30 +38,37 @@ namespace Timelines.Service
             return _eventRepository
                 .GetAll()
                 .Include(e => e.PersonEvents)
-                    .ThenInclude(pe => pe.Person)
+                .ThenInclude(pe => pe.Person)
                 .FirstOrDefault(e => e.Id == id);
         }
+
         public IEnumerable<Event> GetByPersonId(int personId)
         {
             return _eventRepository.GetAll()
                 .Where(e => e.PersonEvents.Any(pe => pe.PersonId == personId))
                 .Include(e => e.PersonEvents)
-                    .ThenInclude(pe => pe.Person);
+                .ThenInclude(pe => pe.Person);
         }
 
         public async Task<bool> Add(int personId, Event newEvent)
         {
-            _eventRepository.Add(newEvent);
+
+
+            if (newEvent.Id == 0)
+            {
+                _eventRepository.Add(newEvent);
+            }
+
+            var newPersonEvent = new PersonEvent
+            {
+                PersonId = personId,
+                Event = newEvent
+            };
+
             var person = _personRepository
                 .GetAll()
                 .Include(e => e.PersonEvents)
                 .FirstOrDefault(p => p.Id == personId);
-
-            var newPersonEvent = new PersonEvent()
-            {
-                Person = person,
-                Event = newEvent
-            };
 
             person.PersonEvents.Add(newPersonEvent);
 

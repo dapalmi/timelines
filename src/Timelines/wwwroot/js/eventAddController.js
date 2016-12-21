@@ -8,7 +8,10 @@
 
             $scope.personId = $routeParams.personId;
             $scope.person = {};
+            $scope.events = [];
+            $scope.existingEvent = {};
             $scope.newEvent = {};
+            $scope.isAddExistingEvent = false;
             $scope.successMessage = "";
             $scope.errorMessage = "";
             $scope.isBusy = false;
@@ -33,7 +36,39 @@
                     $scope.isBusy = false;
                 });
 
-            $scope.addEvent = function () {
+            $http.get("/api/events/")
+                .then(function (response) {
+                    //Success
+                    $scope.events = response.data;
+                },
+                    function (error) {
+                        //Failure
+                        $scope.errorMessage = "Failed to load data";
+                    })
+                .finally(function () {
+                    $scope.isBusy = false;
+                });
+
+            $scope.addExistingEvent = function () {
+                $scope.isBusy = true;
+
+                $http.post("/api/persons/" + $scope.personId + "/events/" + $scope.existingEvent.event.id)
+                .then(function (response) {
+                    //Success
+                    $scope.existingEvent = {};
+                    $scope.successMessage = "Event successfully added";
+                    $timeout(function () { $scope.successMessage = ""; }, 2000);
+                },
+                    function (error) {
+                        //Failure
+                        $scope.errorMessage = "Failed to save data";
+                    })
+                .finally(function () {
+                    $scope.isBusy = false;
+                });
+            }
+
+            $scope.addNewEvent = function () {
                 $scope.isBusy = true;
 
                 $http.post("/api/persons/" + $scope.personId + "/events", $scope.newEvent)
