@@ -18,6 +18,7 @@ using Timelines.Automapper;
 using Timelines.Domain;
 using Timelines.Domain.Event;
 using Timelines.Domain.Person;
+using Timelines.Domain.Place;
 using Timelines.Domain.Relationship;
 using Timelines.Persistence;
 using Timelines.Service;
@@ -74,6 +75,7 @@ namespace Timelines
             services.AddScoped<EventRepository>();
             services.AddScoped<PersonRepository>();
             services.AddScoped<RelationshipRepository>();
+            services.AddScoped<PlaceRepository>();
 
             services.AddScoped<PersonService>();
             services.AddScoped<EventService>();

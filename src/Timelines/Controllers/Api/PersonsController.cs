@@ -73,6 +73,20 @@ namespace Timelines.Controllers.Api
             }
         }
 
+        [HttpGet("/api/persons/gendertypes")]
+        public IActionResult GetGenderTypes()
+        {
+            try
+            {
+                return Ok(Enum.GetNames(typeof(GenderType)));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Could not get gender types", ex);
+                return BadRequest("Error occurred");
+            }
+        }
+
         // POST api/values
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]PersonViewModel personViewModel)

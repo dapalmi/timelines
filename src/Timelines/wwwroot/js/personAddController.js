@@ -7,9 +7,23 @@
         ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
 
             $scope.newPerson = {};
+            $scope.genderTypes = [];
             $scope.successMessage = "";
             $scope.errorMessage = "";
             $scope.isBusy = false;
+
+            $http.get("/api/persons/gendertypes")
+                .then(function (response) {
+                    //Success
+                    $scope.genderTypes = response.data;
+                },
+                    function (error) {
+                        //Failure
+                        $scope.errorMessage = "Failed to load data";
+                    })
+                .finally(function () {
+                    $scope.isBusy = false;
+                });
 
             $scope.addPerson = function () {
                 $scope.isBusy = true;

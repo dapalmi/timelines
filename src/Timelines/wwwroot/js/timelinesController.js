@@ -103,6 +103,16 @@
                     return $scope.siblings.indexOf(id) !== -1;
                 }
 
+                $scope.isMale = function(genderType) {
+                    return genderType === "Male";
+                }
+                $scope.isFemale = function (genderType) {
+                    return genderType === "Female";
+                }
+                $scope.isSpirit = function (genderType) {
+                    return genderType === "Spirit";
+                }
+
                 $scope.fastBackward = function (size) {
                     var numberOfIntervals = getNumberOfIntervals(size);
                     var newYear = $scope.config.startYear;

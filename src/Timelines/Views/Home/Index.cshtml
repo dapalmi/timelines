@@ -129,17 +129,17 @@
                         <div class="progress-bar progress-bar-striped"
                              ng-class="{'progress-bar-danger' : isParent(timeline.id), 'progress-bar-success' : isChild(timeline.id), 'progress-bar-info' : isSpouse(timeline.id), 'progress-bar-warning' : isSibling(timeline.id)}"
                              role="progressbar" ng-style="getUnknownStartWidth(timeline, size.name)">
-                            <span ng-bind="getUnknownStartTimelineName(timeline, size.name)"></span>
+                            <span ng-bind="getUnknownStartTimelineName(timeline, size.name)"></span><span ng-show="getUnknownStartTimelineName(timeline, size.name)"> <i class="fa fa-mars" ng-show="isMale(timeline.genderType)"></i><i class="fa fa-venus" ng-show="isFemale(timeline.genderType)"></i><i class="fa fa-cloud" ng-show="isSpirit(timeline.genderType)"></i></span>
                         </div>
                         <div class="progress-bar"
                              ng-class="{'progress-bar-danger' : isParent(timeline.id), 'progress-bar-success' : isChild(timeline.id), 'progress-bar-info' : isSpouse(timeline.id), 'progress-bar-warning' : isSibling(timeline.id)}"
                              role="progressbar" ng-style="getMainWidth(timeline, size.name)">
-                            <span ng-bind="getMainTimelineName(timeline, size.name)"></span>
+                            <span ng-bind="getMainTimelineName(timeline, size.name)"></span><span ng-show="getMainTimelineName(timeline, size.name)"> <i class="fa fa-mars" ng-show="isMale(timeline.genderType)"></i><i class="fa fa-venus" ng-show="isFemale(timeline.genderType)"></i><i class="fa fa-cloud" ng-show="isSpirit(timeline.genderType)"></i></span>
                         </div>
                         <div class="progress-bar progress-bar-striped"
                              ng-class="{'progress-bar-danger' : isParent(timeline.id), 'progress-bar-success' : isChild(timeline.id), 'progress-bar-info' : isSpouse(timeline.id), 'progress-bar-warning' : isSibling(timeline.id)}"
                              role="progressbar" ng-style="getUnknownEndWidth(timeline, size.name)">
-                            <span ng-bind="getUnknownEndTimelineName(timeline, size.name)"></span>
+                            <span ng-bind="getUnknownEndTimelineName(timeline, size.name)"></span><span ng-show="getUnknownEndTimelineName(timeline, size.name)"> <i class="fa fa-mars" ng-show="isMale(timeline.genderType)"></i><i class="fa fa-venus" ng-show="isFemale(timeline.genderType)"></i><i class="fa fa-cloud" ng-show="isSpirit(timeline.genderType)"></i></span>
                         </div>
                     </div>
                     <div class="clearfix"></div>

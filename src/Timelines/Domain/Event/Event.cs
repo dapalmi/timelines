@@ -15,5 +15,8 @@ namespace Timelines.Domain.Event
         public string ImageUrl { get; set; }
 
         public List<Person.PersonEvent> PersonEvents { get; set; } = new List<PersonEvent>();
+
+        public int? PlaceId { get; set; }
+        public Place.Place Place { get; set; }
     }
 }

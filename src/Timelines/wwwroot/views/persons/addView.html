@@ -20,6 +20,11 @@
             <input class="form-control" type="text" id="meaning" name="meaning" ng-model="newPerson.meaning"/>
         </div>
         <div class="form-group">
+            <label for="genderType">Gender Type</label>
+            <select class="form-control" id="genderType" name="genderType" ng-model="newPerson.genderType" ng-options="x for x in genderTypes" required></select>
+            <span ng-show="newPersonForm.genderType.$error.required" class="text-warning" ng-cloak>Gender Type is required</span>
+        </div>
+        <div class="form-group">
             <label for="name">Unknown Start</label>
             <input class="form-control" type="number" id="unknownStart" name="unknownStart" ng-model="newPerson.unknownStart" min="-4030" max="2020" />
             <span ng-show="newPersonForm.unknownStart.$error.min || newPersonForm.unknownStart.$error.max" class="text-warning" ng-cloak>Not a valid number</span>

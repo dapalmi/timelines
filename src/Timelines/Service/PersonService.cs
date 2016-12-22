@@ -103,6 +103,7 @@ namespace Timelines.Service
 
             oldPerson.Name = person.Name;
             oldPerson.Meaning = person.Meaning;
+            oldPerson.GenderType = person.GenderType;
             oldPerson.Start = person.Start;
             oldPerson.End = person.End;
             oldPerson.UnknownStart = person.UnknownStart;

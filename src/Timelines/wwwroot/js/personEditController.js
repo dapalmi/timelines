@@ -8,6 +8,7 @@
 
             $scope.personId = $routeParams.personId;
             $scope.person = {};
+            $scope.genderTypes = [];
             $scope.events = [];
             $scope.relationships = [];
             $scope.successMessage = "";
@@ -44,6 +45,19 @@
                     .finally(function () {
                         $scope.isBusy = false;
                     });
+
+            $http.get("/api/persons/gendertypes")
+                .then(function (response) {
+                    //Success
+                    $scope.genderTypes = response.data;
+                },
+                    function (error) {
+                        //Failure
+                        $scope.errorMessage = "Failed to load data";
+                    })
+                .finally(function () {
+                    $scope.isBusy = false;
+                });
 
             $http.get("/api/persons/" + $scope.personId + "/events")
                     .then(function (response) {
