@@ -22,5 +22,7 @@ namespace Timelines.ViewModels
         public IEnumerable<int> Spouse { get; set; }
         public IEnumerable<int> Siblings { get; set; }
         public bool IsSelected { get; set; }
+
+        public int OrderYear => UnknownStart ?? Start;
     }
 }

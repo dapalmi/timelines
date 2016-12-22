@@ -33,7 +33,7 @@ namespace Timelines.Controllers.Api
         {
             try
             {
-                return Ok(_timelineService.GetAll());
+                return Ok(_timelineService.GetAll().OrderBy(t => t.OrderYear));
             }
             catch (Exception ex)
             {
