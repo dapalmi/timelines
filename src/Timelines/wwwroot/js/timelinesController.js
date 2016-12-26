@@ -377,7 +377,7 @@
                     var range = { "start": 0, "end": 0 }
                     range.start = timeline.start;
                     range.end = timeline.end;
-                    if (timeline.unknownStart !== null && timeline.unknownStart < timeline.start) {
+                    if (timeline.unknownStart !== null && timeline.unknownStart <= timeline.start) {
                         //range.start = timeline.unknownStart;
                         range.start = 0;
                     }
