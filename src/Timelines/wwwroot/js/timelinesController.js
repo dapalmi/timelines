@@ -189,7 +189,10 @@
                 }
                 $scope.getEventYearString = function (year) {
                     var yearString = "";
-                    if (year < 0) {
+                    if (year === null) {
+                        yearString = "?";
+                    }
+                    else if (year < 0) {
                         yearString += year * -1 + " B.C.E";
                     }
                     else {
@@ -396,7 +399,7 @@
                     var startYear = $scope.currentYear - ($scope.config.yearsPerInterval / 2);
                     var endYear = startYear + numberOfIntervals * $scope.config.yearsPerInterval;
                     return events.filter(
-                        function (event) { return event.year >= startYear && event.year <= endYear }
+                        function (event) { return (event.year >= startYear && event.year <= endYear) || event.year === null }
                     );
                 }
 
@@ -413,6 +416,9 @@
                     }
                     if (start < startYear) {
                         start = startYear;
+                    }
+                    if (end === null) {
+                        end = timelineStartYear;
                     }
                     if (end > endYear) {
                         end = endYear;

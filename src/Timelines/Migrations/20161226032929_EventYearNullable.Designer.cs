@@ -8,9 +8,10 @@ using Timelines.Persistence;
 namespace Timelines.Migrations
 {
     [DbContext(typeof(TimelinesContext))]
-    partial class TimelinesContextModelSnapshot : ModelSnapshot
+    [Migration("20161226032929_EventYearNullable")]
+    partial class EventYearNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")
