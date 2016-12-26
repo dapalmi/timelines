@@ -242,7 +242,11 @@
                         return { "width": width };
                     }
                     $scope.getCompleteWidth = function (timeline, size) {
-                        var width = calculateCompleteWidth(timeline, size) + 'px';
+                        //var width = calculateCompleteWidth(timeline, size) + 'px';
+                        var unknownStartWidth = calculateUnknownStartWidth(timeline, size);
+                        var mainWidth = calculateMainWidth(timeline, size);
+                        var unknownEndWidth = calculateUnknownEndWidth(timeline, size);
+                        var width = unknownStartWidth + mainWidth + unknownEndWidth;
                         return { "width": width };
                     }
                     $scope.getUnknownStartWidth = function (timeline, size) {
