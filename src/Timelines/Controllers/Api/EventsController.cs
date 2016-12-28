@@ -76,7 +76,7 @@ namespace Timelines.Controllers.Api
             if (ModelState.IsValid)
             {
                 var newEvent = Mapper.Map<Event>(eventViewModel);
-                if (eventViewModel.Place.Id == null)
+                if (eventViewModel.Place?.Id == null)
                 {
                     newEvent.Place = null;
                 }
@@ -125,7 +125,7 @@ namespace Timelines.Controllers.Api
             if (ModelState.IsValid)
             {
                 var ev = Mapper.Map<Event>(eventViewModel);
-                if (eventViewModel.Place.Id == null)
+                if (eventViewModel.Place?.Id == null)
                 {
                     ev.Place = null;
                 }
