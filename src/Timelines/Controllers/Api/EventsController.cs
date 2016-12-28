@@ -76,6 +76,10 @@ namespace Timelines.Controllers.Api
             if (ModelState.IsValid)
             {
                 var newEvent = Mapper.Map<Event>(eventViewModel);
+                if (eventViewModel.Place.Id == null)
+                {
+                    newEvent.Place = null;
+                }
                 if (await _eventService.Add(personId, newEvent))
                 {
                     return Created($"api/events/{eventViewModel.Name}", Mapper.Map<EventViewModel>(newEvent));
@@ -121,6 +125,10 @@ namespace Timelines.Controllers.Api
             if (ModelState.IsValid)
             {
                 var ev = Mapper.Map<Event>(eventViewModel);
+                if (eventViewModel.Place.Id == null)
+                {
+                    ev.Place = null;
+                }
                 if (await _eventService.Update(id, ev))
                 {
                     return Created($"api/events/{ev.Id}", Mapper.Map<EventViewModel>(ev));

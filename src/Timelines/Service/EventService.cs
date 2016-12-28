@@ -59,11 +59,11 @@ namespace Timelines.Service
 
         public async Task<bool> Add(int personId, Event newEvent)
         {
-            if (newEvent.Place?.Id != null)
+            if (newEvent.Place != null)
             {
-                newEvent.PlaceId = newEvent.Place?.Id;
-                newEvent.Place = null;
+                newEvent.PlaceId = newEvent.Place.Id;
             }
+            newEvent.Place = null;
 
             if (newEvent.Id == 0)
             {
@@ -96,9 +96,13 @@ namespace Timelines.Service
             oldEvent.Year = ev.Year;
             oldEvent.Text = ev.Text;
             oldEvent.ImageUrl = ev.ImageUrl;
-            if (ev.Place?.Id != null)
+            if (ev.Place != null)
             {
                 oldEvent.PlaceId = ev.Place.Id;
+            }
+            else
+            {
+                oldEvent.PlaceId = null;
             }
 
             return await _eventRepository.SaveChangesAsync();
