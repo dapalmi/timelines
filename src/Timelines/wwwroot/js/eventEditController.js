@@ -10,6 +10,7 @@
             $scope.eventId = $routeParams.eventId;
             $scope.person = {};
             $scope.event = {};
+            $scope.places = [];
             $scope.successMessage = "";
             $scope.errorMessage = "";
             $scope.isBusy = true;
@@ -38,6 +39,19 @@
                 .then(function (response) {
                     //Success
                     $scope.event = response.data;
+                    },
+                    function (error) {
+                        //Failure
+                        $scope.errorMessage = "Failed to load data";
+                    })
+                .finally(function () {
+                    $scope.isBusy = false;
+                });
+
+            $http.get("/api/places/")
+                .then(function (response) {
+                    //Success
+                    $scope.places = response.data;
                 },
                     function (error) {
                         //Failure

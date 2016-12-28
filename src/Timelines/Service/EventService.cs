@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using AutoMapper;
 using Microsoft.CodeAnalysis.CSharp;
 using Timelines.Domain.Person;
+using Timelines.Domain.Place;
 using Timelines.ViewModels;
 
 
@@ -19,18 +20,22 @@ namespace Timelines.Service
     {
         private readonly EventRepository _eventRepository;
         private readonly PersonRepository _personRepository;
+        private readonly PlaceRepository _placeRepository;
 
-        public EventService(EventRepository eventRepository, PersonRepository personRepository)
+        public EventService(EventRepository eventRepository, PersonRepository personRepository,
+            PlaceRepository placeRepository)
         {
             _eventRepository = eventRepository;
             _personRepository = personRepository;
+            _placeRepository = placeRepository;
         }
 
         public IEnumerable<Event> GetAll()
         {
             return _eventRepository.GetAll()
                 .Include(e => e.PersonEvents)
-                .ThenInclude(pe => pe.Person);
+                .ThenInclude(pe => pe.Person)
+                .Include(e => e.Place);
         }
 
         public Event ById(int id)
@@ -39,6 +44,7 @@ namespace Timelines.Service
                 .GetAll()
                 .Include(e => e.PersonEvents)
                 .ThenInclude(pe => pe.Person)
+                .Include(e => e.Place)
                 .FirstOrDefault(e => e.Id == id);
         }
 
@@ -47,12 +53,17 @@ namespace Timelines.Service
             return _eventRepository.GetAll()
                 .Where(e => e.PersonEvents.Any(pe => pe.PersonId == personId))
                 .Include(e => e.PersonEvents)
-                .ThenInclude(pe => pe.Person);
+                .ThenInclude(pe => pe.Person)
+                .Include(e => e.Place);
         }
 
         public async Task<bool> Add(int personId, Event newEvent)
         {
-
+            if (newEvent.Place?.Id != null)
+            {
+                newEvent.PlaceId = newEvent.Place?.Id;
+                newEvent.Place = null;
+            }
 
             if (newEvent.Id == 0)
             {
@@ -85,6 +96,10 @@ namespace Timelines.Service
             oldEvent.Year = ev.Year;
             oldEvent.Text = ev.Text;
             oldEvent.ImageUrl = ev.ImageUrl;
+            if (ev.Place?.Id != null)
+            {
+                oldEvent.PlaceId = ev.Place.Id;
+            }
 
             return await _eventRepository.SaveChangesAsync();
         }

@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Places";
+}
+@section Scripts{
+    <environment names="Development">
+        <script src="~/lib/angular/angular.js"></script>
+        <script src="~/lib/angular-sanitize/angular-sanitize.js"></script>
+        <script src="~/lib/angular-route/angular-route.js"></script>
+        <script src="~/lib/angular-ui-grid/ui-grid.js"></script>
+        <script src="~/js/app-places.js" asp-append-version="true"></script>
+        <script src="~/js/placesController.js" asp-append-version="true"></script>
+        <script src="~/js/placeAddController.js" asp-append-version="true"></script>
+        <script src="~/js/placeEditController.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular.min.js"
+                asp-fallback-src="~/lib/angular/angular.min.js"
+                asp-fallback-test="window.angular">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-sanitize.min.js"
+                asp-fallback-src="~/lib/angular-sanitize/angular-sanitize.min.js">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-route.min.js"
+                asp-fallback-src="~/lib/angular-route/angular-route.min.js">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/4.0.0/ui-grid.min.js"
+                asp-fallback-src="~/lib/angular-ui-grid/ui-grid.min.js">
+        </script>
+        <script src="~/js/app-places.js" asp-append-version="true"></script>
+        <script src="~/js/placesController.js" asp-append-version="true"></script>
+        <script src="~/js/placeAddController.js" asp-append-version="true"></script>
+        <script src="~/js/placeEditController.js" asp-append-version="true"></script>
+    </environment>
+}
+
+<div ng-app="app-places">
+
+    <div ng-view></div>
+
+</div>

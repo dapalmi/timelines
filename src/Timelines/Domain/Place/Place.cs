@@ -10,8 +10,8 @@ namespace Timelines.Domain.Place
     {
         public string Name { get; set; }
         public string Text { get; set; }
-        public decimal Longitude { get; set; }
-        public decimal Latitude { get; set; }
+        public decimal? Longitude { get; set; }
+        public decimal? Latitude { get; set; }
 
         public List<Event.Event> Events { get; set; }
     }

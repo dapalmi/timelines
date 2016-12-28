@@ -32,6 +32,7 @@ namespace Timelines.Service
                     .ThenInclude(pe => pe.Person)
                 .Include(p => p.PersonEvents)
                     .ThenInclude(pe => pe.Event)
+                        .ThenInclude(pe => pe.Place)
                 .Include(p => p.RelatedPersonRelationships);
             var timelines = allPersons.Select(p => Mapper.Map<TimelineViewModel>(p));
             return timelines;
@@ -45,6 +46,7 @@ namespace Timelines.Service
                     .ThenInclude(pe => pe.Person)
                 .Include(p => p.PersonEvents)
                     .ThenInclude(pe => pe.Event)
+                        .ThenInclude(pe => pe.Place)
                 .FirstOrDefault();
             return Mapper.Map<TimelineViewModel>(person);
         }

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Timelines.Domain;
 using Timelines.Domain.Event;
 using Timelines.Domain.Person;
+using Timelines.Domain.Place;
 using Timelines.Domain.Relationship;
 
 namespace Timelines.Persistence
@@ -33,6 +34,14 @@ namespace Timelines.Persistence
 
             modelBuilder.Entity<Relationship>()
                 .HasKey(t => new {t.PersonId, t.RelatedPersonId});
+
+            modelBuilder.Entity<Place>()
+                .Property(p => p.Latitude)
+                .HasColumnType("decimal(9,6)");
+
+            modelBuilder.Entity<Place>()
+                .Property(p => p.Longitude)
+                .HasColumnType("decimal(9,6)");
 
             base.OnModelCreating(modelBuilder);
         }

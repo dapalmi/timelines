@@ -1,0 +1,14 @@
+﻿<div>
+    <div class="alert alert-danger" ng-show="errorMessage"><span ng-bind="errorMessage"></span></div>
+
+    <div class="text-center" ng-show="isBusy">
+        <i class="fa fa-circle-o-notch fa-spin"></i> Loading...
+    </div>
+    
+    <br/>
+    <a href="#/add" class="btn btn-sm btn-primary">Add</a>
+    <br/>
+    <br/>
+    
+    <div class="gridStyle" ui-grid="gridOptions"></div>
+</div>

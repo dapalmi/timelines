@@ -80,6 +80,7 @@ namespace Timelines
             services.AddScoped<PersonService>();
             services.AddScoped<EventService>();
             services.AddScoped<RelationshipService>();
+            services.AddScoped<PlaceService>();
             services.AddScoped<TimelineService>();
 
             // Add framework services.
@@ -107,6 +108,7 @@ namespace Timelines
                 config.CreateMap<Event, EventViewModel>().ReverseMap();
                 config.CreateMap<Person, PersonViewModel>().ReverseMap();
                 config.CreateMap<Relationship, RelationshipViewModel>().ReverseMap();
+                config.CreateMap<Place, PlaceViewModel>().ReverseMap();
                 config.CreateMap<Person, TimelineViewModel>()
                     .ForMember(t => t.Events, conf => conf.ResolveUsing<TimelineEventsCustomResolver>())
                     .ForMember(t => t.Parents, conf => conf.MapFrom(p => p.RelatedPersonRelationships

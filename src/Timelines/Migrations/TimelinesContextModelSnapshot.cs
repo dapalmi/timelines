@@ -240,9 +240,11 @@ namespace Timelines.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<decimal>("Latitude");
+                    b.Property<decimal?>("Latitude")
+                        .HasColumnType("decimal(9,6)");
 
-                    b.Property<decimal>("Longitude");
+                    b.Property<decimal?>("Longitude")
+                        .HasColumnType("decimal(9,6)");
 
                     b.Property<string>("Name");
 

@@ -2,37 +2,39 @@
     ViewData["Title"] = "Home Page";
 }
 @section Scripts{
-<environment names="Development">
-    <script src="~/lib/angular/angular.js"></script>
-    <script src="~/lib/angular-animate/angular-animate.js"></script>
-    <script src="~/lib/angular-sanitize/angular-sanitize.js"></script>
-    <script src="~/lib/angular-route/angular-route.js"></script>
-    <script src="~/lib/showdown/dist/showdown.js"></script>
-    <script src="~/js/simpleControls.js"></script>
-    <script src="~/js/app-timelines.js" asp-append-version="true"></script>
-    <script src="~/js/timelinesController.js" asp-append-version="true"></script>
-</environment>
-<environment names="Staging,Production">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular.min.js"
-            asp-fallback-src="~/lib/angular/angular.min.js"
-            asp-fallback-test="window.angular">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-animate.min.js"
-            asp-fallback-src="~/lib/angular-animate/angular-animate.min.js">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-sanitize.min.js"
-            asp-fallback-src="~/lib/angular-sanitize/angular-sanitize.min.js">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-route.min.js"
-            asp-fallback-src="~/lib/angular-route/angular-route.min.js">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.5.1/showdown.min.js"
-            asp-fallback-src="~/lib/showdown/dist/showdown.min.js">
-    </script>
-    <script src="~/js/simpleControls.js" asp-append-version="true"></script>
-    <script src="~/js/app-timelines.js" asp-append-version="true"></script>
-    <script src="~/js/timelinesController.js" asp-append-version="true"></script>
-</environment>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDacHT0q3dUOlXBhMfDWslcMetDR5P84VM"></script>
+    <environment names="Development">
+        <script src="~/lib/angular/angular.js"></script>
+        <script src="~/lib/angular-animate/angular-animate.js"></script>
+        <script src="~/lib/angular-sanitize/angular-sanitize.js"></script>
+        <script src="~/lib/angular-route/angular-route.js"></script>
+        <script src="~/lib/showdown/dist/showdown.js"></script>
+        <script src="~/lib/ngmap/build/scripts/ng-map.js"></script>
+        <script src="~/js/app-timelines.js" asp-append-version="true"></script>
+        <script src="~/js/timelinesController.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular.min.js"
+                asp-fallback-src="~/lib/angular/angular.min.js"
+                asp-fallback-test="window.angular">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-animate.min.js"
+                asp-fallback-src="~/lib/angular-animate/angular-animate.min.js">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-sanitize.min.js"
+                asp-fallback-src="~/lib/angular-sanitize/angular-sanitize.min.js">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-route.min.js"
+                asp-fallback-src="~/lib/angular-route/angular-route.min.js">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.5.1/showdown.min.js"
+                asp-fallback-src="~/lib/showdown/dist/showdown.min.js">
+        </script>
+        <script src="~/lib/ngmap/build/scripts/ng-map.min.js" asp-append-version="true"></script>
+        <script src="~/js/simpleControls.js" asp-append-version="true"></script>
+        <script src="~/js/app-timelines.js" asp-append-version="true"></script>
+        <script src="~/js/timelinesController.js" asp-append-version="true"></script>
+    </environment>
 }
 
 <div id="timelineContainer" class="container" ng-app="app-timelines" ng-controller="timelinesController">
@@ -93,32 +95,41 @@
                             <div class="pull-left text-center" role="button" ng-attr-title="{{getEventTitle(event)}}" data-toggle="modal" data-target="#eventModal-{{size.name}}-{{timeline.id}}-{{$index}}">
                                 <i class="fa fa-caret-down fa-2x fa-fw"></i>
                             </div>
-                            <div class="modal fade" id="eventModal-{{size.name}}-{{timeline.id}}-{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            <div class="modal-title text-center">
-                                                <h2>{{timeline.name}}</h2>
-                                                <h4>[{{timeline.meaning}}]</h4>
-                                                <h4>{{getTimelineRangeString(timeline)}}</h4>
-                                                <img ng-src="{{getImageSrc(timeline.imageUrl)}}" alt="{{timeline.name}}" class="img-circle">
+                                <div class="modal fade" id="eventModal-{{size.name}}-{{timeline.id}}-{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <div class="modal-title text-center">
+                                                    <h2>{{timeline.name}}</h2>
+                                                    <h4>[{{timeline.meaning}}]</h4>
+                                                    <h4>{{getTimelineRangeString(timeline)}}</h4>
+                                                    <img ng-src="{{getImageSrc(timeline.imageUrl)}}" alt="{{timeline.name}}" class="img-circle">
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="text-center">
-                                                <h3>{{event.name}}</h3>
-                                                <h4>{{getEventYearString(event.year)}}</h4>
+                                            <div class="modal-body">
+                                                <div class="text-center">
+                                                    <h3>{{event.name}}</h3>
+                                                    <h4>{{getEventYearString(event.year)}}</h4>
+                                                </div>
+                                                <hr />
+                                                <div ng-bind-html="getHtmlEventText(event.text)"></div>
+                                                <hr />
+                                                <div ng-show="event.place">
+                                                    <h4>Place</h4>
+                                                    <ng-map id="{{'map-'+size.name+'-'+timeline.id+'-'+event.id}}" center="{{event.place.latitude+', '+event.place.longitude}}" zoom="5">
+                                                        <marker position="{{event.place.latitude+', '+event.place.longitude}}">
+                                                            <div>{{event.place.name}}</div>
+                                                        </marker>
+                                                    </ng-map>
+                                                </div>
                                             </div>
-                                            <hr />
-                                            <div ng-bind-html="getHtmlEventText(event.text)"></div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
                         </div>
                     </div>
                     <div class="clearfix"></div>
@@ -148,4 +159,6 @@
         </div>
     </div>
 </div>
+
+
 

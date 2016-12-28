@@ -4,7 +4,7 @@
 
     angular.module("app-timelines")
         .controller('timelinesController',
-        ['$scope', '$http', function ($scope, $http) {
+        ['$scope', '$http', '$document', 'NgMap', function ($scope, $http, $document, NgMap) {
 
             $scope.isBusy = true;
 
@@ -46,12 +46,35 @@
                     $scope.pixelsPerYear = $scope.config.intervalWidth / $scope.config.yearsPerInterval;
                 }
 
+
+                $(window).on('shown.bs.modal',
+                            function () {
+
+                                for (var x = 0; x < $scope.sizes.length; x++) {
+                                    var size = $scope.sizes[x];
+                                    for (var y = 0; y < size.timelines.length; y++) {
+                                        var timeline = size.timelines[y];
+                                        for (var z = 0; z < timeline.events.length; z++) {
+                                            var event = timeline.events[z];
+                                            if (event.place) {
+                                                NgMap.getMap("map-" + size.name + "-" + timeline.id + "-" + event.id)
+                                                    .then(function (map) {
+                                                        var currentCenter = map.getCenter();
+                                                        google.maps.event.trigger(map, "resize");
+                                                        map.setCenter(currentCenter);
+                                                    });
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+
                 $http.get("/api/timelines")
                     .then(function (response) {
                         //Success
                         angular.copy(response.data, $scope.timelines);
                         $scope.changeConfig();
-                    },
+                        },
                         function (error) {
                             //Failure
                             $scope.errorMessage = "Failed to load data";
@@ -59,7 +82,6 @@
                     .finally(function () {
                         $scope.isBusy = false;
                     });
-
 
                 $scope.parents = [];
                 $scope.children = [];

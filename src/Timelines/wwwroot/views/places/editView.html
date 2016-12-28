@@ -1,0 +1,45 @@
+﻿<div>
+    <div class="alert alert-success" ng-show="successMessage"><span ng-bind="successMessage"></span></div>
+    <div class="alert alert-danger" ng-show="errorMessage"><span ng-bind="errorMessage"></span></div>
+
+    <div class="text-center" ng-show="isBusy">
+        <i class="fa fa-circle-o-notch fa-spin"></i> Loading...
+    </div>
+
+    <br/>
+    <a href="#/" class="btn btn-sm btn-primary"><i class="fa fa-angle-left"></i> Back</a>
+    <br/>
+    <br/>
+
+    <h1>Edit <span ng-bind="place.name"></span></h1>
+
+    <form novalidate name="editPlaceForm" ng-submit="editPlace()">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input class="form-control" type="text" id="name" name="name" ng-model="place.name" required />
+            <span ng-show="editPlaceForm.name.$error.required" class="text-warning" ng-cloak>Name is required</span>
+        </div>
+        <div class="form-group">
+            <label for="name">Latitude</label>
+            <input class="form-control" type="number" id="latitude" name="latitude" ng-model="place.latitude" min="-90" max="90" required/>
+            <span ng-show="editPlaceForm.latitude.$error.required" class="text-warning" ng-cloak>Latitude is required</span>
+            <span ng-show="editPlaceForm.latitude.$error.min || editPlaceForm.latitude.$error.max" class="text-warning" ng-cloak>Not a valid number</span>
+        </div>
+        <div class="form-group">
+            <label for="name">Longitude</label>
+            <input class="form-control" type="number" id="longitude" name="longitude" ng-model="place.longitude" min="-180" max="180" required/>
+            <span ng-show="editPlaceForm.longitude.$error.required" class="text-warning" ng-cloak>Longitude is required</span>
+            <span ng-show="editPlaceForm.longitude.$error.min || editPlaceForm.longitude.$error.max" class="text-warning" ng-cloak>Not a valid number</span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Update"
+                   class="btn btn-sm btn-success"
+                   ng-disabled="editPlaceForm.$invalid" />
+        </div>
+    </form>
+
+    <br />
+    <br />
+    <button class="btn btn-sm btn-danger" ng-click="deletePlace()">Delete</button>
+
+</div>

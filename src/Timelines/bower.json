@@ -13,7 +13,9 @@
     "angular-sanitize": "1.5.7",
     "angular-route": "1.5.7",
     "showdown": "1.5.1",
-    "angular-ui-grid": "4.0.0"
+    "angular-ui-grid": "4.0.0",
+    "ngmap": "1.17.8",
+    "angular-bootstrap": "2.3.2"
   },
   "resolutions": {
     "angular": "1.5.7"

@@ -2,7 +2,6 @@
 
     "use strict";
 
-    angular.module("app-timelines", ["ngAnimate", "ngSanitize", "simpleControls"]);
-
+    angular.module("app-timelines", ["ngAnimate", "ngSanitize", "ngMap"]);
 
 })();
