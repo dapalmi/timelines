@@ -118,9 +118,7 @@
                                                 <div ng-show="event.place">
                                                     <h4>Place</h4>
                                                     <ng-map id="{{'map-'+size.name+'-'+timeline.id+'-'+event.id}}" center="{{event.place.latitude+', '+event.place.longitude}}" zoom="5">
-                                                        <marker position="{{event.place.latitude+', '+event.place.longitude}}">
-                                                            <div>{{event.place.name}}</div>
-                                                        </marker>
+                                                        <marker position="{{event.place.latitude+', '+event.place.longitude}}"></marker>
                                                     </ng-map>
                                                 </div>
                                             </div>
