@@ -111,12 +111,16 @@
                                                 <div class="text-center">
                                                     <h3>{{event.name}}</h3>
                                                     <h4>{{getEventYearString(event.year)}}</h4>
+                                                    <div ng-show="event.imageUrl">
+                                                        <img ng-src="{{getImageSrc(event.imageUrl)}}" class="img-circle">
+                                                    </div>
                                                 </div>
-                                                <hr />
-                                                <div ng-bind-html="getHtmlEventText(event.text)"></div>
-                                                <hr />
+                                                <div ng-show="getHtmlEventText(event.text)">
+                                                    <hr />
+                                                    <div ng-bind-html="getHtmlEventText(event.text)"></div>
+                                                </div>
                                                 <div ng-show="event.place">
-                                                    <h4>Place</h4>
+                                                    <hr />
                                                     <ng-map id="{{'map-'+size.name+'-'+timeline.id+'-'+event.id}}" center="{{event.place.latitude+', '+event.place.longitude}}" zoom="5">
                                                         <marker position="{{event.place.latitude+', '+event.place.longitude}}"></marker>
                                                     </ng-map>
