@@ -102,9 +102,11 @@
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                                 <div class="modal-title text-center">
                                                     <h2>{{timeline.name}}</h2>
-                                                    <h4>[{{timeline.meaning}}]</h4>
+                                                    <h4 ng-show="timeline.meaning">[{{timeline.meaning}}]</h4>
                                                     <h4>{{getTimelineRangeString(timeline)}}</h4>
-                                                    <img ng-src="{{getImageSrc(timeline.imageUrl)}}" alt="{{timeline.name}}" class="img-circle">
+                                                    <div ng-show="timeline.imageUrl">
+                                                      <img ng-src="{{getImageSrc(timeline.imageUrl)}}" alt="{{timeline.name}}" class="img-circle">
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="modal-body">
