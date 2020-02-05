@@ -92,7 +92,7 @@
                         <div class="pull-left void" ng-style="getTimelineDetailsVoidWidth(timeline, size.name)"></div>
                         <div ng-repeat="event in getCurrentEvents(timeline.events, size.name) track by $index">
                             <div class="pull-left void" ng-style="getEventVoidWidth(event, timeline, size.name)"></div>
-                            <div class="pull-left text-center" role="button" ng-attr-title="{{getEventTitle(event)}}" data-toggle="modal" data-target="#eventModal-{{size.name}}-{{timeline.id}}-{{$index}}">
+                            <div class="pull-left text-center" role="button" ng-attr-title="{{getEventTitle(timeline, event)}}" data-toggle="modal" data-target="#eventModal-{{size.name}}-{{timeline.id}}-{{$index}}">
                                 <i class="fa fa-caret-down fa-2x fa-fw"></i>
                             </div>
                                 <div class="modal fade" id="eventModal-{{size.name}}-{{timeline.id}}-{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -111,13 +111,14 @@
                                                 </div>
                                             </div>
                                             <div class="modal-body">
-                                                <div class="text-center">
-                                                    <h3>{{event.name}}</h3>
-                                                    <h4>{{getEventYearString(event.year)}}</h4>
-                                                    <div ng-show="event.imageUrl">
-                                                        <img ng-src="{{getImageSrc(event.imageUrl)}}" class="img-circle">
-                                                    </div>
+                                              <div class="text-center">
+                                                <h3>{{event.name}}</h3>
+                                                <h4>{{getEventYearString(event.year)}}</h4>
+                                                <h4 ng-show="getPersonAgeString(timeline, event.year)">{{getPersonAgeString(timeline, event.year)}}</h4>
+                                                <div ng-show="event.imageUrl">
+                                                  <img ng-src="{{getImageSrc(event.imageUrl)}}" class="img-circle">
                                                 </div>
+                                              </div>
                                                 <div ng-show="getHtmlEventText(event.text)">
                                                     <hr />
                                                     <div ng-bind-html="getHtmlEventText(event.text)"></div>

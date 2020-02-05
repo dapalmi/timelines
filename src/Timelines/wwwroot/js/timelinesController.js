@@ -254,9 +254,34 @@
                     }
                     return yearString;
                 }
-                $scope.getEventTitle = function (event) {
+                $scope.getPersonAgeString = function (timeline, eventYear) {
+                  var personAge = 0;
+                  var range = getTimelineRange(timeline);
+                  if (range.start === 0) {
+                    return "";
+                  }
+                  if (range.start < 0) {
+                    if (eventYear < 0) {
+                      personAge = (range.start - eventYear) * -1;
+                    } else {
+                      personAge = ((range.start * -1) + eventYear);
+                    }
+                  }
+                  else {
+                    personAge = (eventYear - range.start);
+                  }
+                  if (personAge === 0) {
+                    return "";
+                  }
+                  return "(" + personAge + " yrs)";
+                }
+                $scope.getEventTitle = function (timeline, event) {
                     var title = event.name + " \n";
                     title += $scope.getEventYearString(event.year);
+                    var personAge = $scope.getPersonAgeString(timeline, event.year);
+                    if (personAge) {
+                        title += "\n" + personAge;
+                    }
                     return title;
                 }
                 $scope.getIntervalWidth = function () {
