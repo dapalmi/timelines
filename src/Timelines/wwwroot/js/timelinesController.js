@@ -181,13 +181,26 @@
                     return "visible-" + size + "-block";
                 }
                 $scope.getTimelineTitle = function (timeline) {
-                    var title = timeline.name + " [" + timeline.meaning + "] \n";
-                    title += $scope.getTimelineRangeString(timeline);
+                    var title = timeline.name;
+                    if (timeline.meaning) {
+                      title += " [" + timeline.meaning + "]";
+                    }
+                    var timelineRange = $scope.getTimelineRangeString(timeline);
+                    if (timelineRange) {
+                      title += "\n" + timelineRange;
+                    }
+                    var rangeInYears = $scope.getRangeInYearsString(timeline);
+                    if (rangeInYears) {
+                        title += "\n" + rangeInYears;
+                    }
                     return title;
                 }
                 $scope.getTimelineRangeString = function (timeline) {
                     var rangeString = "";
                     var range = getTimelineRange(timeline);
+                    if (range.start === 0 || range.end === 0) {
+                      return null;
+                    }
                     if (range.start < 0) {
                         rangeString += range.start * -1 + " B.C.E";
                     }
@@ -208,6 +221,25 @@
                         rangeString += range.end + " C.E";
                     }
                     return rangeString;
+                }
+                $scope.getRangeInYearsString = function (timeline) {
+                  var rangeString = "";
+                  var range = getTimelineRange(timeline);
+                  if (range.start === 0 || range.end === 0) {
+                    return null;
+                  }
+                  var rangeInYears = 0;
+                  if (range.start < 0) {
+                    if (range.end < 0) {
+                      rangeInYears = (range.start - range.end) * -1;
+                    } else {
+                      rangeInYears = ((range.start * -1) + range.end);
+                    }
+                  } else {
+                    rangeInYears = (range.end - range.start);
+                  }
+                  rangeString += "(" + rangeInYears + " yrs)";
+                  return rangeString;
                 }
                 $scope.getEventYearString = function (year) {
                     var yearString = "";
